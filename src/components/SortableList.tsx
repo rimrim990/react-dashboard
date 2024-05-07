@@ -44,7 +44,7 @@ export default function SortableList() {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <table>
+            <table style={{margin: '0 auto'}}>
                 <thead>
                 <tr>
                     <th>아이디</th>
