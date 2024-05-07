@@ -46,12 +46,23 @@ export default function SortableList() {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <SortableContext
-                items={items}
-                strategy={verticalListSortingStrategy}
-            >
-                {items.map(item => <SortableItem key={item.id} item={item} />)}
-            </SortableContext>
+            <table>
+                <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>태그</th>
+                    <th>내용</th>
+                </tr>
+                </thead>
+                <tbody>
+                <SortableContext
+                    items={items}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {items.map(item => <SortableItem key={item.id} item={item}/>)}
+                </SortableContext>
+                </tbody>
+            </table>
         </DndContext>
     );
 }
