@@ -2,6 +2,7 @@ import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities"
 import {Item} from "./data";
 import './SortableItem.css'
+import {CSSProperties} from "react";
 
 interface Props {
     item: Item
@@ -18,6 +19,7 @@ export default function SortableItem({item}: Props) {
         attributes,
         listeners,
         setNodeRef,
+        isDragging,
         transform,
         transition,
     } = useSortable({id});
@@ -28,7 +30,8 @@ export default function SortableItem({item}: Props) {
      */
     console.log(`'${id}' transform: x -> ${transform?.x}, y -> ${transform?.y}`)
 
-    const style = {
+    const style: CSSProperties = {
+        opacity: isDragging ? 0.4 : undefined,
         transform: CSS.Transform.toString(transform),
         transition,
     }

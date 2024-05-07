@@ -1,12 +1,14 @@
 import React, {useState} from "react";
-import {datas} from "./data";
+import {datas, Item} from "./data";
 import {closestCenter, DndContext, DragEndEvent, DragStartEvent} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
 import {restrictToParentElement} from "@dnd-kit/modifiers";
+import SortableOverlay from "./SortableOverlay";
 
 export default function SortableList() {
     const [items, setItems] = useState(datas);
+    const [activeItem, setActiveItem] = useState<Item | null>(null);
 
     /**
      * sensor - 다양한 장치로부터 drag 이벤트 활성화, 기본 값 - Pointer, Keyboard
@@ -17,11 +19,16 @@ export default function SortableList() {
 
     const handleDragStart = (event: DragStartEvent) => {
         const {active} = event
+        const activeItem = items.find(item => item.id === +active.id)
+        if (activeItem) setActiveItem(activeItem);
+
         console.log(`drag event start - '${active.id}'`)
     }
 
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event
+        setActiveItem(null);
+
         console.log(`drag event end - '${active.id}' to '${over?.id}'`)
 
         if (over?.id && active.id !== over.id) {
@@ -68,6 +75,9 @@ export default function SortableList() {
                 >
                     {items.map(item => <SortableItem key={item.id} item={item}/>)}
                 </SortableContext>
+                <SortableOverlay>
+                    {activeItem ? <SortableItem key={activeItem.id} item={activeItem}/> : null}
+                </SortableOverlay>
                 </tbody>
             </table>
         </DndContext>
