@@ -3,6 +3,7 @@ import {datas} from "./data";
 import {closestCenter, DndContext, DragEndEvent, DragStartEvent} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
+import {restrictToParentElement} from "@dnd-kit/modifiers";
 
 export default function SortableList() {
     const [items, setItems] = useState(datas);
@@ -43,6 +44,7 @@ export default function SortableList() {
             collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
+            modifiers={[restrictToParentElement]}
         >
             <table style={{margin: '0 auto'}}>
                 <thead>
